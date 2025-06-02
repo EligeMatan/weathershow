@@ -11,8 +11,8 @@ const CityWeather = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (city) {
-            getWeatherByName(city)
+        if (cityName) {
+            getWeatherByName(cityName)
                 .then(data => {
                     if ('status' in data && data.status !== 200) {
                         setError(data.message);
@@ -25,7 +25,7 @@ const CityWeather = () => {
                     setError("Помилка при завантаженні погоди");
                 });
         }
-    }, [city]);
+    }, [cityName]);
 
     if (error) return <div>❌ {error}</div>;
     if (!weather) return <div>Завантаження...</div>;
