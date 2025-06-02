@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getWeatherByName } from '../controllers/daily.weather.api';
 
 const CityWeather = () => {
-    const { city } = useParams();
+    // const { city } = useParams();
+    const [ cityName, setCityName ] = useState('');
     const [weather, setWeather] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (city) {
@@ -29,9 +31,11 @@ const CityWeather = () => {
     if (!weather) return <div>Завантаження...</div>;
 
     return (
-        <div>
-            <h1>Погода в {city}</h1>
-            <p>Температура: {weather.main.temp}K</p>
+        <div className="CityWeather">
+            <h1> Погода у місті </h1>
+            <input type="text"  />
+            <h3>Дані:</h3>
+            <p>Температура: {weather.main.temp}°C</p>
             <p>Опис: {weather.weather[0].description}</p>
         </div>
     );
