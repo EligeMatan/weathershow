@@ -1,5 +1,6 @@
 import AppRoter from './routes/AppRouter'
 import './styles/App.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 

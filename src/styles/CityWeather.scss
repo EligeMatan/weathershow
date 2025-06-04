@@ -1,7 +1,43 @@
 .CityWeather {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    position: fixed;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 50px;
+
+    flex-direction: column;
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    .InputCityName {
+        margin-bottom: 10px;
+        width: 20%;
+        height: 2rem;
+    }
+
+    .DataContainer {
+        p {
+            margin-bottom: 0;
+        }
+
+        img {
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+    }
+
+    .MapWrapper {
+        height: 400px;
+        width: 100%;
+        margin-top: 20px;
+
+        .leaflet-container {
+            height: 100%;
+            width: 100%;
+        }
+    }
 }
