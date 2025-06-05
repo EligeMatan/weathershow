@@ -14,7 +14,7 @@ const DEFAULT_POSITION: [number, number] = [50.005833, 36.229167];
 const CityWeather = () => {
     // const { city } = useParams();
     const [inputValue, setInputValue] = useState('');
-    const [cityName, setCityName] = useState(localStorage.getItem("city") || '');
+    const [cityName, setCityName] = useState(localStorage.getItem("city") || 'Харків');
     const [weather, setWeather] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
     const [markerPos, setMarkerPos] = useState<[number, number]>(DEFAULT_POSITION);
@@ -91,6 +91,9 @@ const CityWeather = () => {
         return markerPos ? <Marker position={markerPos} /> : null;
     };
 
+    console.log('weather =', weather);
+    
+
     return (
         <div className="CityWeather">
             <h1> Погода у місті </h1>
@@ -106,7 +109,7 @@ const CityWeather = () => {
             />
 
             {error && <div className="ErrorMsg">❌ {error} ❌</div>}
-
+            
             {weather && (
                 <div className="DataContainer">
                     <h3>Дані:</h3>
