@@ -1,4 +1,4 @@
-import { fetchWeatherData, type WeatherResponse } from "../utils/fetchWeatherData";
+import { fetchData, type WeatherResponse } from "../utils/fetchData";
 import { OPENWEATHER_API_KEY } from "../config/config";
 
 type GeoCityCoord = {
@@ -19,5 +19,5 @@ export const geoCoding = async (city_name: string): Promise<GeoCityCoord | Weath
 
     const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city_name}&appid=${OPENWEATHER_API_KEY}`;
 
-    return fetchWeatherData(url, 'geoCoding');
+    return fetchData(url, 'geoCoding');
 }

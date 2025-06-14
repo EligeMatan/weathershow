@@ -1,7 +1,9 @@
 const Forecast = () => {
     return (
         <div>
-            <h1>Hourly Forecast</h1>
+            <h1>Прогноз на 4 дні</h1>
+
+            <table></table>
         </div>
     );
 };

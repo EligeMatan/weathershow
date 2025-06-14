@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { fetchWeatherData } from "../utils/fetchWeatherData";
+import { fetchWeatherData } from "../utils/fetchData";
 import { OPENWEATHER_API_KEY } from "../config/config";
 
 export const getWeatherMap = async (layer: string, x: number, y: number, z: number): Promise<any | TypeError> => {

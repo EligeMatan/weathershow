@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 import { MapContainer, TileLayer, useMapEvents, Marker } from 'react-leaflet';
-// import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getWeatherByName } from '../controllers/daily.weather.api';
 import '../styles/CityWeather.scss';
@@ -19,6 +18,8 @@ const CityWeather = () => {
     const [error, setError] = useState<string | null>(null);
     const [markerPos, setMarkerPos] = useState<[number, number]>(DEFAULT_POSITION);
 
+    const [cityObj, setCityObj] = useState(null);
+
     useEffect(() => {
         if (!cityName) return;
 
@@ -29,11 +30,12 @@ const CityWeather = () => {
                     setWeather(null);
                 } else {
                     console.log('Weather =', data);
+                    setCityObj(data.city_obj);
 
                     setError(null);
-                    setWeather(data);
-                    if (data.coord) {
-                        setMarkerPos([data.coord.lat, data.coord.lon]);
+                    setWeather(data.output);
+                    if (data.output.coord) {
+                        setMarkerPos([data.city_obj.lat, data.city_obj.lon]);
                     }
 
                     localStorage.setItem("city", cityName);
@@ -67,10 +69,12 @@ const CityWeather = () => {
     };
 
     const LocationMarker = () => {
-        useMapEvents({
-            click: async (event) => {
-                const { lat, lng } = event.latlng;
+        const map = useMapEvents({
+            moveend: async () => {
+                const center = map.getCenter();
+                const { lat, lng } = center;
                 setMarkerPos([lat, lng]);
+
                 try {
                     const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
                     const data = await res.json();
@@ -91,9 +95,6 @@ const CityWeather = () => {
         return markerPos ? <Marker position={markerPos} /> : null;
     };
 
-    console.log('weather =', weather);
-    
-
     return (
         <div className="CityWeather">
             <h1> Погода у місті </h1>
@@ -109,10 +110,10 @@ const CityWeather = () => {
             />
 
             {error && <div className="ErrorMsg">❌ {error} ❌</div>}
-            
+
             {weather && (
                 <div className="DataContainer">
-                    <h3>Дані:</h3>
+                    <h3>Дані по {cityObj.name}, {cityObj.state}:</h3>
                     <p><b>Температура:</b> {weather.main.temp}°C</p>
                     <p><b>Відчувається як:</b> {weather.main.feels_like}°C</p>
                     <p><b>Вітер:</b> {weather.wind.speed}м/с</p>
@@ -133,7 +134,7 @@ const CityWeather = () => {
             )}
 
             <div className="MapWrapper">
-                <MapContainer center={markerPos} zoom={8} >
+                <MapContainer center={markerPos} zoom={8} scrollWheelZoom={true} >
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution='&copy; OpenStreetMap contributors'

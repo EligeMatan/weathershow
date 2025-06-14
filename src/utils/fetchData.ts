@@ -8,25 +8,14 @@ interface TypeError {
 
 export type WeatherResponse = any | TypeError;
 
-export const fetchWeatherData = async (url: string, method: string): Promise<WeatherResponse> => {
+export const fetchData = async (url: string, method: string): Promise<WeatherResponse> => {
 
     try {
         const response = await axios.get(url);
 
-        console.log('response =', response);
+        console.log(`called method: ${method},  response in fetchData =`, response);
         
-        // const response = await fetch(url);
-
-        // if (!response.ok) {
-        //     return {
-        //         status: response.status,
-        //         message: `${method}: Помилка під час отримання погоди...`,
-        //     }
-        // }
-
-        // const json = await response.json();
-
-        // return json;
+        return response.data;
 
     } catch (error) {
         console.log(`${method}: Fetch error: `, error);

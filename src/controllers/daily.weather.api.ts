@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { fetchWeatherData } from "../utils/fetchWeatherData";
+import { fetchData } from "../utils/fetchData";
 import { OPENWEATHER_API_KEY } from "../config/config";
 import { geoCoding } from "./geocoding";
 
 export const getWeatherByCoord = async (latitude: number, longtitude: number): Promise<any | TypeError> => {
     console.log('latitude =', latitude, ' longtitude =', longtitude);
-    
+
     if (!latitude || !longtitude) {
         return {
             status: 407,
@@ -15,13 +15,13 @@ export const getWeatherByCoord = async (latitude: number, longtitude: number): P
 
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longtitude}&appid=${OPENWEATHER_API_KEY}&lang=ua&units=metric`;
 
-    return fetchWeatherData(url, 'getWeatherByCoord');
+    return fetchData(url, 'getWeatherByCoord');
 }
 
 
 export const getWeatherByName = async (city_name: string) => {
     console.log('city_name =', city_name);
-    if (!city_name.trim()) {
+    if (!city_name.trim) {
         return {
             status: 407,
             message: 'Не всі дані заповнені...',
@@ -44,7 +44,7 @@ export const getWeatherByName = async (city_name: string) => {
         // return fetchWeatherData(url, 'getWeatherByName');
 
         console.log('output = ', output);
-        return output;
+        return { output, city_obj };
         // return {
         //     output.weather.main,
         //     output.weather.description,
